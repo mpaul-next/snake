@@ -16,6 +16,7 @@ let snake = [
   {x: 4, y: 3},
   {x: 5, y: 3},
 ]
+let direction = 'right'
 
 // draw helpers
 function erase() {
@@ -51,21 +52,44 @@ function drawSnake(){
 // user input
 window.addEventListener('keydown', event => {
   console.log(event.code)
+  if (event.code === 'ArrowDown') {
+    direction = 'down'
+  }
+  if (event.code === 'ArrowUp') {
+    direction = 'up'
+  }
+  if (event.code === 'ArrowLeft') {
+    direction = 'left'
+  }
+  if (event.code === 'ArrowRight') {
+    direction = 'right'
+  }
 })
 
-// todo program the game
-
 function loop() {
-  console.log(snake)
-
   let head = snake[snake.length - 1]
-  let newHead = {x: head.x + 1, y: head.y}
-  snake.push(newHead)
+  if (direction === 'right') {
+    let newHead = {x: head.x + 1, y: head.y}
+    snake.push(newHead)
+  }
+  if (direction === 'down') {
+    let newHead = {x: head.x, y: head.y + 1}
+    snake.push(newHead)
+  }
+  if (direction === 'left') {
+    let newHead = {x: head.x - 1, y: head.y}
+    snake.push(newHead)
+  }
+  if (direction === 'up') {
+    let newHead = {x: head.x, y: head.y - 1}
+    snake.push(newHead)
+  }
+  snake.shift()
 
   erase()
   drawSnake()
   drawCircle(7, 3)
 
-  setTimeout(() => loop(), 100)
+  setTimeout(() => loop(), 500)
 }
 loop()
